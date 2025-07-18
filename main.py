@@ -5,6 +5,8 @@ from tkinter import messagebox
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
+from manager import Manager
+
 class ShortsAutomatorApp(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -80,19 +82,13 @@ class ShortsAutomatorApp(ctk.CTk):
         user_ideas = self.user_ideas_entry.get("1.0", "end").strip()
         gemini_ideas = self.gemini_ideas_entry.get("1.0", "end").strip()
         scripts = self.scripts_entry.get("1.0", "end").strip()
-
-        if not (user_ideas and gemini_ideas and scripts):
-            messagebox.showerror("Missing Info", "Please fill in all fields.")
-            return
-
+        
         self.status_label.configure(text="Starting generation...")
         self.progress_bar.set(0.1)
 
         # Simulate steps (placeholder logic)
-        self.after(1000, lambda: self.update_progress(0.3, "Generating scripts..."))
-        self.after(2000, lambda: self.update_progress(0.6, "Generating images or assets..."))
-        self.after(3000, lambda: self.update_progress(0.9, "Finalizing video..."))
-        self.after(4000, lambda: self.update_progress(1.0, "Completed!"))
+        manager = Manager()
+        manager.startGeneration(user_ideas)
 
     def update_progress(self, value, status):
         self.progress_bar.set(value)
